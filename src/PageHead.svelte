@@ -21,7 +21,7 @@
 
 <div class="header">
     <div>
-        <a class="brand" href="https://www.railwayhistory.org/">
+        <a class="brand" href="https://www.railwayhistory.org/" title="Go to the Railway History Project home page.">
             <img src="img/logo64-blue.svg" alt="The Railway History Project">
         </a>
     </div>

@@ -156,22 +156,22 @@
 <div class="sidebar">
     <ul class="icons">
         <li class="info">
-            <span class="{ sidebar === "info" ? 'active' : ''}" on:click={toggle_info}>
+            <span class="{ sidebar === "info" ? 'active' : ''}" on:click={toggle_info} title="Show information and map key">
                 i
             </span>
         </li>
         <li class="pax">
-            <span class="{ currLayerValue === "passenger" ? 'active' : ''}" on:click={toggle_passenger}>
+            <span class="{ currLayerValue === "passenger" ? 'active' : ''}" on:click={toggle_passenger} title ="Switch to the passenger service layer">
                 i
             </span>
         </li>
         <li class="construction">
-            <span class="{ currLayerValue === "detail" ? 'active' : ''}" on:click={toggle_detail}>
+            <span class="{ currLayerValue === "detail" ? 'active' : ''}" on:click={toggle_detail} title="Switch to the (incomplete) detail layer">
                 i
             </span>
         </li>
         <li class="about">
-            <span class="{ sidebar === "about" ? 'active' : ''}" on:click={toggle_about}>
+            <span class="{ sidebar === "about" ? 'active' : ''}" on:click={toggle_about} title="About the map">
                 i
             </span>
         </li>
