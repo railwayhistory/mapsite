@@ -193,7 +193,7 @@
 
     .controls {
         position: absolute;
-        top: 147px;
+        top: 74px;
         right: 7px;
         z-index: 999;
     }

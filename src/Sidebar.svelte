@@ -1,7 +1,12 @@
 <script>
-    import { setMainLayer } from './Map.svelte';
+    import { currLayer, setMainLayer } from './Map.svelte';
     import InfoPanel from './InfoPanel.svelte';
-    import LayersPanel from './LayersPanel.svelte';
+    import AboutPanel from './AboutPanel.svelte';
+
+    let currLayerValue;
+    const unsubscribe = currLayer.subscribe(value => {
+        currLayerValue = value;
+    });
 
     let sidebar = null;
 
@@ -14,12 +19,30 @@
         }
     }
 
-    function toggle_layers() {
-        if (sidebar === "layers") {
+    function toggle_passenger() {
+        if (currLayerValue === "passenger") {
+            setMainLayer("overview")
+        }
+        else {
+            setMainLayer("passenger")
+        }
+    }
+
+    function toggle_detail() {
+        if (currLayerValue === "detail") {
+            setMainLayer("overview")
+        }
+        else {
+            setMainLayer("detail")
+        }
+    }
+
+    function toggle_about() {
+        if (sidebar === "about") {
             sidebar = null
         }
         else {
-            sidebar = "layers"
+            sidebar = "about"
         }
     }
 
@@ -36,7 +59,7 @@
     .icons {
           list-style: none;
           position: absolute;
-          top: 0;
+          top: 112px;
           left: -40px;
           margin: 0;
           margin-top: 3px;
@@ -58,9 +81,6 @@
         color: rgb(0,0,0,0);
         background-position-y: 0px;
     }
-    .icons .info span {
-        background-position-x: 0;
-    }
     .icons span:hover {
         background-position-y: -50px;
     }
@@ -70,8 +90,22 @@
     .icons span.active:hover {
         background-position-y: -150px;
     }
-    .icons .layers span {
-        background-position-x: -50px;
+
+    .icons .info span {
+        background-position-x: 0;
+    }
+    .icons .pax span {
+        background-position-x: -250px;
+    }
+    .icons .construction span {
+        background-position-x: -300px;
+    }
+    .icons .about span {
+        background-position-x: -350px;
+    }
+
+    .icons .about {
+        padding-top: 4px;
     }
 
     .content {
@@ -121,11 +155,23 @@
 
 <div class="sidebar">
     <ul class="icons">
-        <li class="layers">
-            <span class="{ sidebar === "layers" ? 'active' : ''}" on:click={toggle_layers}>l</span>
-        </li>
         <li class="info">
             <span class="{ sidebar === "info" ? 'active' : ''}" on:click={toggle_info}>
+                i
+            </span>
+        </li>
+        <li class="pax">
+            <span class="{ currLayerValue === "passenger" ? 'active' : ''}" on:click={toggle_passenger}>
+                i
+            </span>
+        </li>
+        <li class="construction">
+            <span class="{ currLayerValue === "detail" ? 'active' : ''}" on:click={toggle_detail}>
+                i
+            </span>
+        </li>
+        <li class="about">
+            <span class="{ sidebar === "about" ? 'active' : ''}" on:click={toggle_about}>
                 i
             </span>
         </li>
@@ -137,8 +183,8 @@
             {#if sidebar === "info" }
                 <InfoPanel />
             {/if }
-            {#if sidebar === "layers" }
-                <LayersPanel />
+            {#if sidebar === "about" }
+                <AboutPanel />
             {/if }
         </div>
     {/if }
