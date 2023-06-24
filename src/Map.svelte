@@ -31,11 +31,13 @@
         var y = (Math.round(center[0] * 10000) / 10000);
 
         currDetail.set(mainLayers[localCurrLayer].detail[zoom]);
+        let initView = localCurrLayer + "@" + zoom + "/" + x + "/" + y;
 
         window.history.replaceState(
             window.history.state, document.title,
-            "#" + localCurrLayer + "@" + zoom + "/" + x + "/" + y
+            "#" + initView
         );
+        localStorage.setItem("initView", initView);
     }
 
     function clickLocation() {
@@ -48,6 +50,38 @@
                 map.getView().setCenter(center);
             })
         }
+    }
+
+    function getInitView() {
+        let initView = {
+            layer: "overview", center: [9.538, 54.0728], zoom: 9
+        };
+
+        let parseLocation = function(value) {
+            if (value === null || value.length === 0) {
+                return
+            }
+            var parts = value.split("@");
+            if (parts.length === 2) {
+                if (!(parts[0] in mainLayers)) {
+                    parts[0] = "overview";
+                }
+                var mapparts = parts[1].split("/");
+                if (mapparts.length === 3) {
+                    initView = {
+                        layer: parts[0],
+                        zoom: parseInt(mapparts[0], 10),
+                        center: [
+                            parseFloat(mapparts[2]),
+                            parseFloat(mapparts[1]),
+                        ]
+                    };
+                }
+            }
+        }
+        parseLocation(localStorage.getItem("initView"));
+        parseLocation(window.location.hash.slice(1));
+        return initView;
     }
 
 </script>
@@ -113,31 +147,12 @@
                     3, 3, 4, 4, 5,
                     5, 5, 5, 5, 5,
                 ],
-                'maxZoom': 13,
+                'maxZoom': 15,
             }
         };
 
 
-        var init_view = {
-            layer: "overview", center: [9.538, 54.0728], zoom: 9
-        };
-        var hashparts = window.location.hash.slice(1).split("@");
-        if (hashparts.length === 2) {
-            if (!(hashparts[0] in mainLayers)) {
-                hashparts[0] = "overview";
-            }
-            var mapparts = hashparts[1].split("/");
-            if (mapparts.length === 3) {
-                init_view = {
-                    layer: hashparts[0],
-                    zoom: parseInt(mapparts[0], 10),
-                    center: [
-                        parseFloat(mapparts[2]),
-                        parseFloat(mapparts[1]),
-                    ]
-                };
-            }
-        }
+        var init_view = getInitView();
 
         mapLayers = [
             new Tile({
