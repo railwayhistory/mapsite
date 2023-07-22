@@ -55,6 +55,16 @@
         border-top-style: solid;
         border-width: 2.5pt;
     }
+    .emptytrack {
+        display: inline-block;
+        width: 3em;
+        margin-bottom: 0.4ex;
+        padding: 0;
+        height: 1.4pt;
+        border-top-style: solid;
+        border-bottom-style: solid;
+        border-width: 0.7pt;
+    }
     .desc {
         font-size: 0.8rem;
         padding-left: 10px;
@@ -74,7 +84,7 @@
 <div class="infoPanel">
     <h1>Map Key</h1>
 
-    {#if currDetailValue <= 2 }
+    {#if currDetailValue <= 1 }
         {#if currLayerValue === 'passenger' }
             <table class="mapKey">
                 <tr>
@@ -134,12 +144,12 @@
                 <tr>
                     <td class="symbol">
                         <span class="track"
-                              style="border-color: #8845aa"
+                              style="border-color: #6c2b86"
                         ></span>
                     </td>
                     <td class="symbol">
                         <span class="track"
-                              style="border-color: #4d2263"
+                              style="border-color: #6c2b86; opacity: 0.7"
                         ></span>
                     </td>
                     <td class="desc">
@@ -149,12 +159,12 @@
                 <tr>
                     <td class="symbol">
                         <span class="track"
-                              style="border-color: #aa4689"
+                              style="border-color: #812c5c"
                         ></span>
                     </td>
                     <td class="symbol">
                         <span class="track"
-                              style="border-color: #691f51"
+                              style="border-color: #812c5c; opacity: 0.7"
                         ></span>
                     </td>
                     <td class="desc">
@@ -164,12 +174,12 @@
                 <tr>
                     <td class="symbol">
                         <span class="track"
-                              style="border-color: #a51100"
+                              style="border-color: #9b2321"
                         ></span>
                     </td>
                     <td class="symbol">
                         <span class="track"
-                              style="border-color: #720c00"
+                              style="border-color: #9b2321; opacity: 0.7"
                         ></span>
                     </td>
                     <td class="desc">
@@ -179,12 +189,12 @@
                 <tr>
                     <td class="symbol">
                         <span class="track"
-                              style="border-color: #d05113"
+                              style="border-color: #b64f0d"
                         ></span>
                     </td>
                     <td class="symbol">
                         <span class="track"
-                              style="border-color: #ac3900"
+                              style="border-color: #b64f0d; opacity: 0.7"
                         ></span>
                     </td>
                     <td class="desc">
@@ -194,32 +204,56 @@
                 <tr>
                     <td class="symbol">
                         <span class="track"
-                              style="border-color: #007e49"
+                              style="border-color: #007e40"
                         ></span>
                     </td>
                     <td class="symbol">
                         <span class="track"
-                              style="border-color: #004f2e"
+                              style="border-color: #007e40; opacity: 0.7"
                         ></span>
                     </td>
                     <td class="desc">
-                        electrified with third or fourth rail
+                        electrified with third rail
                     </td>
                 </tr>
                 <tr>
                     <td class="symbol">
                         <span class="track"
-                              style="border-color: #98690d"
+                              style="border-color: #53633b"
                         ></span>
                     </td>
                     <td class="symbol">
                         <span class="track"
-                              style="border-color: #523700"
+                              style="border-color: #53633b; opacity: 0.7"
+                        ></span>
+                    </td>
+                    <td class="desc">
+                        electrified with fourth rail
+                    </td>
+                </tr>
+                <tr>
+                    <td class="symbol">
+                        <span class="track"
+                              style="border-color: #5a3a29"
+                        ></span>
+                    </td>
+                    <td class="symbol">
+                        <span class="track"
+                              style="border-color: #5a3a29; opacity: 0.7"
                         ></span>
                     </td>
                     <td class="desc">
                         not electrified
                     </td>
+                </tr>
+                <tr>
+                    <td class="symbol">
+                        <span class="track"
+                              style="border-color: #005387"
+                        ></span>
+                    </td>
+                    <td></td>
+                    <td class="desc">tram or light rail</td>
                 </tr>
                 <tr>
                     <td colspan="2" class="symbol">
@@ -246,70 +280,171 @@
                     <td class="desc">closed before 1915</td>
                 </tr>
 
-
-                <tr>
-                    <td colspan="3">
-                        <h2>Tram or Light Rail Line</h2>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" class="symbol">
-                        <span class="track"
-                              style="border-color: #1c63ab"
-                        ></span>
-                    </td>
-                    <td class="desc">in service</td>
-                </tr>
-                <tr>
-                    <td colspan="2" class="symbol">
-                        <span class="track"
-                              style="border-color: #5e8eb9"
-                        ></span>
-                    </td>
-                    <td class="desc">closed permanently</td>
-                </tr>
-                <tr>
-                    <td colspan="2" class="symbol">
-                        <span class="track"
-                              style="border-color: #8fb0d1"
-                        ></span>
-                    </td>
-                    <td class="desc">tracks removed</td>
-                </tr>
-                <tr>
-                    <td colspan="2" class="symbol">
-                        <span class="track"
-                              style="border-color: #bed2e4"
-                        ></span>
-                    </td>
-                    <td class="desc">closed before 1915</td>
-                </tr>
-
-                {#if currDetailValue == 2 }
-                <tr>
-                    <td colspan="3">
-                        <h2>Number of Tracks</h2>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" class="symbol">
-                        <span class="track"
-                              style="border-width: 1.5pt"
-                        ></span>
-                    </td>
-                    <td class="desc">single track</td>
-                </tr>
-                <tr>
-                    <td colspan="2" class="symbol">
-                        <span class="track"
-                              style="border-width: 2.5pt"
-                        ></span>
-                    </td>
-                    <td class="desc">double track or more</td>
-                </tr>
-                {/if}
             </table>
         {/if}
+    {:else if currDetailValue == 2 }
+        <table class="mapKey">
+            <tr>
+                <td colspan="3">
+                    <h2>Line</h2>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="symbol">
+                    <span class="track"
+                          style="border-color: #191919"
+                    ></span>
+                </td>
+                <td class="desc">scheduled passenger service</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="symbol">
+                    <span class="emptytrack"
+                          style="border-color: #191919; width: 0.25em"
+                    ></span><span class="track"
+                          style="border-color: #191919; width: 1em"
+                    ></span><span class="emptytrack"
+                          style="border-color: #191919; width: 0.5em"
+                    ></span><span class="track"
+                          style="border-color: #191919; width: 1em"
+                    ></span><span class="emptytrack"
+                          style="border-color: #191919; width: 0.25em"
+                    ></span>
+                </td>
+                <td class="desc">heritage or tourist service</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="symbol">
+                    <span class="emptytrack"
+                          style="border-color: #191919"
+                    ></span>
+                </td>
+                <td class="desc">no passenger service</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="symbol">
+                    <span class="track"
+                          style="border-color: #8c8c8c"
+                    ></span>
+                </td>
+                <td class="desc">closed permanently</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="symbol">
+                    <span class="track"
+                          style="border-color: #a6a6a6"
+                    ></span>
+                </td>
+                <td class="desc">tracks removed</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="symbol">
+                    <span class="track"
+                          style="border-color: #e6e6e6"
+                    ></span>
+                </td>
+                <td class="desc">closed before 1915</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <h2>Electrification</h2>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="symbol">
+                    <span class="track"
+                          style="border-color: #6c2b86"
+                    ></span>
+                </td>
+                <td class="desc">
+                    electrified with OLE ≥ 25 kV AC
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="symbol">
+                    <span class="track"
+                          style="border-color: #812c5c"
+                    ></span>
+                </td>
+                <td class="desc">
+                    … &lt; 25 kV AC
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="symbol">
+                    <span class="track"
+                          style="border-color: #9b2321"
+                    ></span>
+                </td>
+                <td class="desc">
+                    … ≥ 2000 V DC
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="symbol">
+                    <span class="track"
+                          style="border-color: #b64f0d"
+                    ></span>
+                </td>
+                <td class="desc">
+                    … &lt; 2000 V DC
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="symbol">
+                    <span class="track"
+                          style="border-color: #007e40"
+                    ></span>
+                </td>
+                <td class="desc">
+                    electrified with third rail
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="symbol">
+                    <span class="track"
+                          style="border-color: #53633b"
+                    ></span>
+                </td>
+                <td class="desc">
+                    electrified with fourth rail
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <h2>Tram or Light Rail</h2>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="symbol">
+                    <span class="track"
+                          style="border-color: #005387"
+                    ></span>
+                </td>
+                <td class="desc">tram or light rail</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <h2>Number of Tracks</h2>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="symbol">
+                    <span class="track"
+                          style="border-width: 1.5pt"
+                    ></span>
+                </td>
+                <td class="desc">single track</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="symbol">
+                    <span class="track"
+                          style="border-width: 2.5pt"
+                    ></span>
+                </td>
+                <td class="desc">double track or more</td>
+            </tr>
+        </table>
     {:else if currLayerValue === 'detail'}
         <p class="sorry">Under Construction</p>
     {/if}
