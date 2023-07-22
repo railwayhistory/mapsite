@@ -19,22 +19,16 @@
         }
     }
 
+    function toggle_overview() {
+        setMainLayer("overview")
+    }
+
     function toggle_passenger() {
-        if (currLayerValue === "passenger") {
-            setMainLayer("overview")
-        }
-        else {
-            setMainLayer("passenger")
-        }
+        setMainLayer("passenger")
     }
 
     function toggle_detail() {
-        if (currLayerValue === "detail") {
-            setMainLayer("overview")
-        }
-        else {
-            setMainLayer("detail")
-        }
+        setMainLayer("detail")
     }
 
     function toggle_about() {
@@ -94,14 +88,37 @@
     .icons .info span {
         background-position-x: 0;
     }
+    .icons .overview span {
+        background-position-x: -300px;
+        height: 30px !important;
+        margin-bottom: 0 !important;
+    }
+    .icons li.overview {
+        margin-bottom: 0 !important;
+    }
     .icons .pax span {
-        background-position-x: -250px;
+        background-position-x: -350px;
+        height: 28px !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
+    .icons li.pax {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
     }
     .icons .construction span {
-        background-position-x: -300px;
+        background-position-x: -400px;
+        height: 30px !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
     }
+    .icons li.construction {
+        margin-top: 0 !important;
+    }
+
+
     .icons .about span {
-        background-position-x: -350px;
+        background-position-x: -250px;
     }
 
     .icons .about {
@@ -157,6 +174,11 @@
     <ul class="icons">
         <li class="info">
             <span class="{ sidebar === "info" ? 'active' : ''}" on:click={toggle_info} title="Show information and map key">
+                i
+            </span>
+        </li>
+        <li class="overview">
+            <span class="{ currLayerValue === "overview" ? 'active' : ''}" on:click={toggle_overview} title ="Switch to the overview layer">
                 i
             </span>
         </li>
