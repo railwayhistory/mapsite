@@ -255,6 +255,13 @@
                 }),
                 opacity: 0.13,
             }),
+            new Tile({
+                source: new XYZ({
+                    url: rwhBase + "border/{z}/{x}/{y}.png",
+                    tilePixelRatio: 2,
+                    opaque: false,
+                })
+            }),
         ];
         if (initView.numLayer) {
             mapLayers.push(mainLayers[initView.layer]['numLayer']);
