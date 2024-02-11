@@ -67,11 +67,7 @@
       </li>
       <li>
         send an email to
-        <a href="mailto:info@railwayhistory.org">info@railwayhistory.org</a>;
-      </li>
-      <li>
-        send a tweet to
-        <a href="https://twitter.com/railhistorymap">@railhistorymap</a>.
+        <a href="mailto:info@railwayhistory.org">info@railwayhistory.org</a>.
       </li>
     </ul>
 

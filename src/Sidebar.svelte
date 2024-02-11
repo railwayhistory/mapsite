@@ -1,11 +1,18 @@
 <script>
-    import { currLayer, setMainLayer } from './Map.svelte';
+    import {
+        currLayer, numLayer, setMainLayer, setNumLayer
+    } from './Map.svelte';
     import InfoPanel from './InfoPanel.svelte';
     import AboutPanel from './AboutPanel.svelte';
 
     let currLayerValue;
     const unsubscribe = currLayer.subscribe(value => {
         currLayerValue = value;
+    });
+
+    let numLayerValue;
+    const unsubscribeNumLayer = numLayer.subscribe(value => {
+        numLayerValue = value;
     });
 
     let sidebar = null;
@@ -29,6 +36,10 @@
 
     function toggle_detail() {
         setMainLayer("detail")
+    }
+
+    function toggle_numbers() {
+        setNumLayer(!numLayerValue);
     }
 
     function toggle_about() {
@@ -84,10 +95,6 @@
     .icons span.active:hover {
         background-position-y: -150px;
     }
-
-    .icons .info span {
-        background-position-x: 0;
-    }
     .icons .overview span {
         background-position-x: -300px;
         height: 30px !important;
@@ -110,19 +117,31 @@
         background-position-x: -400px;
         height: 30px !important;
         margin-top: 0 !important;
-        margin-bottom: 0 !important;
     }
     .icons li.construction {
         margin-top: 0 !important;
     }
 
+    .icons .numbers span {
+        background-position-x: -450px;
+        height: 32px !important;
+        margin-top: 0 !important;
+    }
+
+    .icons .info span {
+        background-position-x: 0;
+        margin-bottom: 0 !important;
+    }
+
+    .icons .info {
+        padding-top: 4px;
+    }
 
     .icons .about span {
         background-position-x: -250px;
     }
 
     .icons .about {
-        padding-top: 4px;
     }
 
     .content {
@@ -172,11 +191,6 @@
 
 <div class="sidebar">
     <ul class="icons">
-        <li class="info">
-            <span class="{ sidebar === "info" ? 'active' : ''}" on:click={toggle_info} title="Show information and map key">
-                i
-            </span>
-        </li>
         <li class="overview">
             <span class="{ currLayerValue === "overview" ? 'active' : ''}" on:click={toggle_overview} title ="Switch to the overview layer">
                 i
@@ -189,6 +203,19 @@
         </li>
         <li class="construction">
             <span class="{ currLayerValue === "detail" ? 'active' : ''}" on:click={toggle_detail} title="Switch to the (incomplete) detail layer">
+                i
+            </span>
+        </li>
+
+        <li class="numbers">
+            <span class="{ numLayerValue  ? 'active' : ''}" on:click={toggle_numbers} title="{ numLayerValue ? 'Disable' : 'Show' } line numbers">
+                i
+            </span>
+        </li>
+
+
+        <li class="info">
+            <span class="{ sidebar === "info" ? 'active' : ''}" on:click={toggle_info} title="Show information and map key">
                 i
             </span>
         </li>

@@ -6,20 +6,33 @@
     let mapLayers;
     let map;
     var localCurrLayer = 'overview';
+    var localNumLayer = true;
     export const currLayer = writable("overview");
+    export const numLayer = writable(true);
     export const currDetail = writable(0);
 
     export function setMainLayer(layer) {
-        localCurrLayer = layer;
         currLayer.set(layer);
-        mapLayers[2] = mainLayers[layer]['layer'];
-        map.setLayers(mapLayers);
-        map.getView().setMaxZoom(mainLayers[layer]['maxZoom']);
-        updateHistory(map.getView());
+        localCurrLayer = layer;
+        setLayer()
     }
 
-    export function getMainLayer(layer) {
-        currLayer
+    export function setNumLayer(layer) {
+        numLayer.set(layer);
+        localNumLayer = layer;
+        setLayer()
+    }
+
+    function setLayer() {
+        if (localNumLayer) {
+            mapLayers[2] = mainLayers[localCurrLayer]['numLayer'];
+        }
+        else {
+            mapLayers[2] = mainLayers[localCurrLayer]['layer'];
+        }
+        map.setLayers(mapLayers);
+        map.getView().setMaxZoom(mainLayers[localCurrLayer]['maxZoom']);
+        updateHistory(map.getView());
     }
 
     function updateHistory(view) {
@@ -31,7 +44,11 @@
         var y = (Math.round(center[0] * 10000) / 10000);
 
         currDetail.set(mainLayers[localCurrLayer].detail[zoom]);
-        let initView = localCurrLayer + "@" + zoom + "/" + x + "/" + y;
+        let initView = localCurrLayer;
+        if (!localNumLayer) {
+            initView = initView + "-nonum";
+        }
+        initView = initView + "@" + zoom + "/" + x + "/" + y;
 
         window.history.replaceState(
             window.history.state, document.title,
@@ -54,7 +71,9 @@
 
     function getInitView() {
         let initView = {
-            layer: "overview", center: [9.538, 54.0728], zoom: 9
+            layer: "overview",
+            numLayer: true,
+            center: [9.538, 54.0728], zoom: 9
         };
 
         let parseLocation = function(value) {
@@ -63,13 +82,20 @@
             }
             var parts = value.split("@");
             if (parts.length === 2) {
-                if (!(parts[0] in mainLayers)) {
-                    parts[0] = "overview";
+                let layer = parts[0];
+                let numLayer = true;
+                if (layer.endsWith("-nonum")) {
+                    layer = layer.slice(-6);
+                    numLayer = false;
+                }
+                if (!(layer in mainLayers)) {
+                    layer = "overview";
                 }
                 var mapparts = parts[1].split("/");
                 if (mapparts.length === 3) {
                     initView = {
-                        layer: parts[0],
+                        layer: layer,
+                        numLayer: numLayer,
                         zoom: parseInt(mapparts[0], 10),
                         center: [
                             parseFloat(mapparts[2]),
@@ -91,7 +117,7 @@
     import {
         Attribution, ScaleLine, defaults as defaultControls
     } from 'ol/control';
-    import { Tile } from 'ol/layer';
+    import { Group, Tile } from 'ol/layer';
     import { transform } from 'ol/proj';
     import { XYZ } from 'ol/source';
     import PageFoot from './PageFoot.svelte';
@@ -99,15 +125,36 @@
     let component;
 
     onMount(() => {
+        const rwhBase = "https://map.railwayhistory.org/rail/";
         mainLayers = {
             'overview': {
                 'layer': new Tile({
                     minZoom: 4,
                     source: new XYZ({
-                        url: "https://map.railwayhistory.org/rail/se/{z}/{x}/{y}.png",
+                        url: rwhBase + "el/{z}/{x}/{y}.png",
                         opaque: false,
                         tilePixelRatio: 2,
                     }),
+                }),
+                'numLayer': new Group({
+                    layers: [
+                        new Tile({
+                            minZoom: 4,
+                            source: new XYZ({
+                                url: rwhBase + "el/{z}/{x}/{y}.png",
+                                opaque: false,
+                                tilePixelRatio: 2,
+                            }),
+                        }),
+                        new Tile({
+                            minZoom: 4,
+                            source: new XYZ({
+                                url: rwhBase + "el-num/{z}/{x}/{y}.png",
+                                opaque: false,
+                                tilePixelRatio: 2,
+                            }),
+                        }),
+                    ],
                 }),
                 'detail': [
                     0, 0, 0, 0, 0,
@@ -120,10 +167,30 @@
                 'layer': new Tile({
                     minZoom: 4,
                     source: new XYZ({
-                        url: "https://map.railwayhistory.org/rail/sp/{z}/{x}/{y}.png",
+                        url: rwhBase + "pax/{z}/{x}/{y}.png",
                         opaque: false,
                         tilePixelRatio: 2,
                     }),
+                }),
+                'numLayer': new Group({
+                    layers: [
+                        new Tile({
+                            minZoom: 4,
+                            source: new XYZ({
+                                url: rwhBase + "pax/{z}/{x}/{y}.png",
+                                opaque: false,
+                                tilePixelRatio: 2,
+                            }),
+                        }),
+                        new Tile({
+                            minZoom: 4,
+                            source: new XYZ({
+                                url: rwhBase + "pax-num/{z}/{x}/{y}.png",
+                                opaque: false,
+                                tilePixelRatio: 2,
+                            }),
+                        }),
+                    ],
                 }),
                 'detail': [
                     0, 0, 0, 0, 0,
@@ -136,10 +203,30 @@
                 'layer': new Tile({
                     minZoom: 4,
                     source: new XYZ({
-                        url: "https://map.railwayhistory.org/rail/le/{z}/{x}/{y}.png",
+                        url: rwhBase + "el/{z}/{x}/{y}.png",
                         opaque: false,
                         tilePixelRatio: 2,
                     }),
+                }),
+                'numLayer': new Group({
+                    layers: [
+                        new Tile({
+                            minZoom: 4,
+                            source: new XYZ({
+                                url: rwhBase + "el/{z}/{x}/{y}.png",
+                                opaque: false,
+                                tilePixelRatio: 2,
+                            }),
+                        }),
+                        new Tile({
+                            minZoom: 4,
+                            source: new XYZ({
+                                url: rwhBase + "el-num/{z}/{x}/{y}.png",
+                                opaque: false,
+                                tilePixelRatio: 2,
+                            }),
+                        }),
+                    ],
                 }),
                 'detail': [
                     0, 0, 0, 0, 0,
@@ -152,7 +239,7 @@
         };
 
 
-        var init_view = getInitView();
+        var initView = getInitView();
 
         mapLayers = [
             new Tile({
@@ -168,16 +255,23 @@
                 }),
                 opacity: 0.13,
             }),
-            mainLayers[init_view.layer]['layer'],
         ];
-        currLayer.set(init_view.layer);
-        localCurrLayer = init_view.layer;
+        if (initView.numLayer) {
+            mapLayers.push(mainLayers[initView.layer]['numLayer']);
+        }
+        else {
+            mapLayers.push(mainLayers[initView.layer]['layer']);
+        }
+        currLayer.set(initView.layer);
+        localCurrLayer = initView.layer;
+        numLayer.set(initView.numLayer);
+        localNumLayer = initView.numLayer;
         map = new Map({
             target: component,
             view: new View({
-                center: transform(init_view.center, "EPSG:4326", "EPSG:3857"),
-                zoom: init_view.zoom,
-                maxZoom: mainLayers[init_view.layer]['maxZoom'],
+                center: transform(initView.center, "EPSG:4326", "EPSG:3857"),
+                zoom: initView.zoom,
+                maxZoom: mainLayers[initView.layer]['maxZoom'],
                 constrainResolution: true
             }),
             controls: defaultControls({

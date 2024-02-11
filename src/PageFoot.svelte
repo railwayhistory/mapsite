@@ -21,7 +21,7 @@
 
 <div class="footer">
   <p>
-   Base map ©
+   Map data ©
    <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>.<br/>
    Hillshading via
    <a href="https://waymarkedtrails.org/">Waymarked Trails</a>.
