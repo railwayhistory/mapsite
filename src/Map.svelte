@@ -25,10 +25,10 @@
 
     function setLayer() {
         if (localNumLayer) {
-            mapLayers[2] = mainLayers[localCurrLayer]['numLayer'];
+            mapLayers[1] = mainLayers[localCurrLayer]['numLayer'];
         }
         else {
-            mapLayers[2] = mainLayers[localCurrLayer]['layer'];
+            mapLayers[1] = mainLayers[localCurrLayer]['layer'];
         }
         map.setLayers(mapLayers);
         map.getView().setMaxZoom(mainLayers[localCurrLayer]['maxZoom']);
@@ -242,25 +242,29 @@
         var initView = getInitView();
 
         mapLayers = [
-            new Tile({
-                source: new XYZ({
-                    url: "https://map.railwayhistory.org/base/{z}/{x}/{y}.png",
-                    tilePixelRatio: 2,
-                })
-            }),
-            new Tile({
-                source: new XYZ({
-                    url: "https://hillshading.waymarkedtrails.org/srtm/{z}/{x}/{-y}.png",
-                    tilePixelRation: 2,
-                }),
-                opacity: 0.13,
-            }),
-            new Tile({
-                source: new XYZ({
-                    url: rwhBase + "border/{z}/{x}/{y}.png",
-                    tilePixelRatio: 2,
-                    opaque: false,
-                })
+            new Group({
+                layers: [
+                    new Tile({
+                        source: new XYZ({
+                            url: "https://map.railwayhistory.org/base/{z}/{x}/{y}.png",
+                            tilePixelRatio: 2,
+                        })
+                    }),
+                    new Tile({
+                        source: new XYZ({
+                            url: "https://hillshading.waymarkedtrails.org/srtm/{z}/{x}/{-y}.png",
+                            tilePixelRation: 2,
+                        }),
+                        opacity: 0.13,
+                    }),
+                    new Tile({
+                        source: new XYZ({
+                            url: rwhBase + "border/{z}/{x}/{y}.png",
+                            tilePixelRatio: 2,
+                            opaque: false,
+                        })
+                    }),
+                ]
             }),
         ];
         if (initView.numLayer) {
