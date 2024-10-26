@@ -1,10 +1,23 @@
 <script>
     import { onDestroy } from 'svelte';
-    import { currLayer, setMainLayer } from "./Map.svelte";
+    import {
+        currLayer, latinLabels, numLayer, setMainLayer, setLatinLabels,
+        setNumLayer
+    } from "./Map.svelte";
 
     let currLayerValue;
     const unsubscribe = currLayer.subscribe(value => {
         currLayerValue = value;
+    });
+
+    let numLayerValue;
+    const unsubscribeNumLayer = numLayer.subscribe(value => {
+        numLayerValue = value;
+    });
+
+    let latinLabelsValue;
+    const unsubscribeLatinLabels = latinLabels.subscribe(value => {
+        latinLabelsValue = value;
     });
 
     function selectOverview() {
@@ -18,6 +31,16 @@
     function selectDetail() {
         setMainLayer("detail");
     }
+
+    function enableNumbers() {
+        setNumLayer(true);
+    }
+    function disableNumbers() {
+        setNumLayer(false);
+    }
+
+    function enableLatin() { setLatinLabels(true); }
+    function disableLatin() { setLatinLabels(false); }
 
     onDestroy(unsubscribe);
 </script>
@@ -38,6 +61,7 @@
         list-style: none;
         padding: 0;
         margin: 0;
+        margin-bottom: 1rem;
     }
     .select {
         padding: 1px 8px 4px;
@@ -91,4 +115,35 @@
                 </p>
         </li>
     </ul>
+    <h1>Line Numbers</h1>
+    <ul>
+        <li class="select{ numLayerValue  ? ' active' : ''}" on:click={enableNumbers}>
+            <h2>Show line numbers</h2>
+            <p>
+                Line numbers are either official or internal to the project.
+            </p>
+        </li>
+        <li class="select{ numLayerValue  ? '' : ' active'}" on:click={disableNumbers}>
+            <h2>Disable line number</h2>
+            <p>
+                Hide line numbers for less clutter.
+            </p>
+        </li>
+    </ul>
+    <h1>Label Script</h1>
+    <ul>
+        <li class="select{ latinLabelsValue ? '' : ' active'}" on:click={disableLatin}>
+            <h2>Local script</h2>
+            <p>
+                Show labels in local script, e.g., Cyrillic, Greek, etc.
+            </p>
+        </li>
+        <li class="select{ latinLabelsValue ? ' active' : ''}" on:click={enableLatin}>
+            <h2>Latin script</h2>
+            <p>
+                Transliterate labels into Latin script.
+            </p>
+        </li>
+    </ul>
+
 </div>

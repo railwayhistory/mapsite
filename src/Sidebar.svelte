@@ -4,6 +4,7 @@
     } from './Map.svelte';
     import InfoPanel from './InfoPanel.svelte';
     import AboutPanel from './AboutPanel.svelte';
+    import LayersPanel from './LayersPanel.svelte';
 
     let currLayerValue;
     const unsubscribe = currLayer.subscribe(value => {
@@ -26,20 +27,13 @@
         }
     }
 
-    function toggle_overview() {
-        setMainLayer("overview")
-    }
-
-    function toggle_passenger() {
-        setMainLayer("passenger")
-    }
-
-    function toggle_detail() {
-        setMainLayer("detail")
-    }
-
-    function toggle_numbers() {
-        setNumLayer(!numLayerValue);
+    function toggle_layers() {
+        if (sidebar === "layers") {
+            sidebar = null
+        }
+        else {
+            sidebar = "layers"
+        }
     }
 
     function toggle_about() {
@@ -95,35 +89,9 @@
     .icons span.active:hover {
         background-position-y: -150px;
     }
-    .icons .overview span {
-        background-position-x: -300px;
-        height: 30px !important;
-        margin-bottom: 0 !important;
-    }
-    .icons li.overview {
-        margin-bottom: 0 !important;
-    }
-    .icons .pax span {
-        background-position-x: -350px;
-        height: 28px !important;
-        margin-top: 0 !important;
-        margin-bottom: 0 !important;
-    }
-    .icons li.pax {
-        margin-top: 0 !important;
-        margin-bottom: 0 !important;
-    }
-    .icons .construction span {
-        background-position-x: -400px;
-        height: 30px !important;
-        margin-top: 0 !important;
-    }
-    .icons li.construction {
-        margin-top: 0 !important;
-    }
 
-    .icons .numbers span {
-        background-position-x: -450px;
+    .icons .layers span {
+        background-position-x: -50px;
         height: 32px !important;
         margin-top: 0 !important;
     }
@@ -131,10 +99,6 @@
     .icons .info span {
         background-position-x: 0;
         margin-bottom: 0 !important;
-    }
-
-    .icons .info {
-        padding-top: 4px;
     }
 
     .icons .about span {
@@ -191,29 +155,11 @@
 
 <div class="sidebar">
     <ul class="icons">
-        <li class="overview">
-            <span class="{ currLayerValue === "overview" ? 'active' : ''}" on:click={toggle_overview} title ="Switch to the overview layer">
+        <li class="layers">
+            <span class="{ sidebar === "layers" ? 'active' : ''}" on:click={toggle_layers} title="Configure map layers">
                 i
             </span>
         </li>
-        <li class="pax">
-            <span class="{ currLayerValue === "passenger" ? 'active' : ''}" on:click={toggle_passenger} title ="Switch to the passenger service layer">
-                i
-            </span>
-        </li>
-        <li class="construction">
-            <span class="{ currLayerValue === "detail" ? 'active' : ''}" on:click={toggle_detail} title="Switch to the (incomplete) detail layer">
-                i
-            </span>
-        </li>
-
-        <li class="numbers">
-            <span class="{ numLayerValue  ? 'active' : ''}" on:click={toggle_numbers} title="{ numLayerValue ? 'Disable' : 'Show' } line numbers">
-                i
-            </span>
-        </li>
-
-
         <li class="info">
             <span class="{ sidebar === "info" ? 'active' : ''}" on:click={toggle_info} title="Show information and map key">
                 i
@@ -234,6 +180,9 @@
             {/if }
             {#if sidebar === "about" }
                 <AboutPanel />
+            {/if }
+            {#if sidebar === "layers" }
+                <LayersPanel />
             {/if }
         </div>
     {/if }

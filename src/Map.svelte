@@ -7,8 +7,10 @@
     let map;
     var localCurrLayer = 'overview';
     var localNumLayer = true;
+    var localLatinLabels = false;
     export const currLayer = writable("overview");
     export const numLayer = writable(true);
+    export const latinLabels = writable(false);
     export const currDetail = writable(0);
 
     export function setMainLayer(layer) {
@@ -23,13 +25,28 @@
         setLayer()
     }
 
+    export function setLatinLabels(enable) {
+        latinLabels.set(enable);
+        localLatinLabels = enable;
+        setLayer()
+    }
+
     function setLayer() {
-        if (localNumLayer) {
-            mapLayers[1] = mainLayers[localCurrLayer]['numLayer'];
+        /*
+        let layers = new Array();
+        if (localLatinLabels) {
+            layers.push(mainLayers[localCurrLayer]['latinLayer']);
         }
         else {
-            mapLayers[1] = mainLayers[localCurrLayer]['layer'];
+            layers.push(mainLayers[localCurrLayer]['layer']);
         }
+        if (localNumLayer) {
+            layers.push(mainLayers[localCurrLayer]['numLayer']);
+        }
+        */
+        mapLayers[1] = railwayLayer(
+            localCurrLayer, localNumLayer, localLatinLabels
+        );
         map.setLayers(mapLayers);
         map.getView().setMaxZoom(mainLayers[localCurrLayer]['maxZoom']);
         updateHistory(map.getView());
@@ -47,6 +64,9 @@
         let initView = localCurrLayer;
         if (!localNumLayer) {
             initView = initView + "-nonum";
+        }
+        if (localLatinLabels) {
+            initView = initView + "-latin";
         }
         initView = initView + "@" + zoom + "/" + x + "/" + y;
 
@@ -84,6 +104,11 @@
             if (parts.length === 2) {
                 let layer = parts[0];
                 let numLayer = true;
+                let latinLabels = false;
+                if (layer.endsWith("-latin")) {
+                    layer = layer.slice(-6);
+                    latinLabels = true;
+                }
                 if (layer.endsWith("-nonum")) {
                     layer = layer.slice(-6);
                     numLayer = false;
@@ -96,6 +121,7 @@
                     initView = {
                         layer: layer,
                         numLayer: numLayer,
+                        latinLabels: latinLabels,
                         zoom: parseInt(mapparts[0], 10),
                         center: [
                             parseFloat(mapparts[2]),
@@ -108,6 +134,20 @@
         parseLocation(localStorage.getItem("initView"));
         parseLocation(window.location.hash.slice(1));
         return initView;
+    }
+
+    function railwayLayer(curr, num, latin) {
+        let layers = new Array();
+        if (latin) {
+            layers.push(mainLayers[curr]['latinLayer']);
+        }
+        else {
+            layers.push(mainLayers[curr]['layer']);
+        }
+        if (num) {
+            layers.push(mainLayers[curr]['numLayer']);
+        }
+        return new Group({ layers: layers });
     }
 
 </script>
@@ -136,25 +176,21 @@
                         tilePixelRatio: 2,
                     }),
                 }),
-                'numLayer': new Group({
-                    layers: [
-                        new Tile({
-                            minZoom: 4,
-                            source: new XYZ({
-                                url: rwhBase + "el/{z}/{x}/{y}.png",
-                                opaque: false,
-                                tilePixelRatio: 2,
-                            }),
-                        }),
-                        new Tile({
-                            minZoom: 4,
-                            source: new XYZ({
-                                url: rwhBase + "el-num/{z}/{x}/{y}.png",
-                                opaque: false,
-                                tilePixelRatio: 2,
-                            }),
-                        }),
-                    ],
+                'latinLayer': new Tile({
+                    minZoom: 4,
+                    source: new XYZ({
+                        url: rwhBase + "el-lat/{z}/{x}/{y}.png",
+                        opaque: false,
+                        tilePixelRatio: 2,
+                    }),
+                }),
+                'numLayer': new Tile({
+                    minZoom: 4,
+                    source: new XYZ({
+                        url: rwhBase + "el-num/{z}/{x}/{y}.png",
+                        opaque: false,
+                        tilePixelRatio: 2,
+                    }),
                 }),
                 'detail': [
                     0, 0, 0, 0, 0,
@@ -172,25 +208,21 @@
                         tilePixelRatio: 2,
                     }),
                 }),
-                'numLayer': new Group({
-                    layers: [
-                        new Tile({
-                            minZoom: 4,
-                            source: new XYZ({
-                                url: rwhBase + "pax/{z}/{x}/{y}.png",
-                                opaque: false,
-                                tilePixelRatio: 2,
-                            }),
-                        }),
-                        new Tile({
-                            minZoom: 4,
-                            source: new XYZ({
-                                url: rwhBase + "pax-num/{z}/{x}/{y}.png",
-                                opaque: false,
-                                tilePixelRatio: 2,
-                            }),
-                        }),
-                    ],
+                'latinLayer': new Tile({
+                    minZoom: 4,
+                    source: new XYZ({
+                        url: rwhBase + "pax-lat/{z}/{x}/{y}.png",
+                        opaque: false,
+                        tilePixelRatio: 2,
+                    }),
+                }),
+                'numLayer': new Tile({
+                    minZoom: 4,
+                    source: new XYZ({
+                        url: rwhBase + "pax-num/{z}/{x}/{y}.png",
+                        opaque: false,
+                        tilePixelRatio: 2,
+                    }),
                 }),
                 'detail': [
                     0, 0, 0, 0, 0,
@@ -208,25 +240,21 @@
                         tilePixelRatio: 2,
                     }),
                 }),
-                'numLayer': new Group({
-                    layers: [
-                        new Tile({
-                            minZoom: 4,
-                            source: new XYZ({
-                                url: rwhBase + "el/{z}/{x}/{y}.png",
-                                opaque: false,
-                                tilePixelRatio: 2,
-                            }),
-                        }),
-                        new Tile({
-                            minZoom: 4,
-                            source: new XYZ({
-                                url: rwhBase + "el-num/{z}/{x}/{y}.png",
-                                opaque: false,
-                                tilePixelRatio: 2,
-                            }),
-                        }),
-                    ],
+                'latinLayer': new Tile({
+                    minZoom: 4,
+                    source: new XYZ({
+                        url: rwhBase + "el-lat/{z}/{x}/{y}.png",
+                        opaque: false,
+                        tilePixelRatio: 2,
+                    }),
+                }),
+                'numLayer': new Tile({
+                    minZoom: 4,
+                    source: new XYZ({
+                        url: rwhBase + "el-num/{z}/{x}/{y}.png",
+                        opaque: false,
+                        tilePixelRatio: 2,
+                    }),
                 }),
                 'detail': [
                     0, 0, 0, 0, 0,
@@ -266,17 +294,16 @@
                     }),
                 ]
             }),
+            railwayLayer(
+                initView.layer, initView.numLayer, initView.latinLabels
+            ),
         ];
-        if (initView.numLayer) {
-            mapLayers.push(mainLayers[initView.layer]['numLayer']);
-        }
-        else {
-            mapLayers.push(mainLayers[initView.layer]['layer']);
-        }
         currLayer.set(initView.layer);
         localCurrLayer = initView.layer;
         numLayer.set(initView.numLayer);
         localNumLayer = initView.numLayer;
+        latinLabels.set(initView.latinLabels);
+        localLatinLabels = initView.latinLabels;
         map = new Map({
             target: component,
             view: new View({
