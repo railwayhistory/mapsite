@@ -55,6 +55,11 @@
           position: relative;
           background-color: #fcfbf8;
     }
+    .sidebar > div {
+        border-left: 1px solid #576793;
+        overflow-y: scroll;
+        height: 100%;
+    }
     .icons {
           list-style: none;
           position: absolute;
