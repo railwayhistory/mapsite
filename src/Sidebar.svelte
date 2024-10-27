@@ -58,7 +58,6 @@
     .sidebar > div {
         border-left: 1px solid #576793;
         overflow-y: scroll;
-        height: 100%;
     }
     .icons {
           list-style: none;
@@ -115,13 +114,14 @@
 
     .content {
         position: relative;
-        padding: 2px 0;
+        padding:  0;
         margin: 0;
     }
 
     @media (min-width: 550px) {
         .content {
             width: 300px;
+            height: 100%;
         }
     }
 
