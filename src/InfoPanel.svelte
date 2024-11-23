@@ -55,15 +55,8 @@
         border-top-style: solid;
         border-width: 2.5pt;
     }
-    .emptytrack {
+    .empty {
         display: inline-block;
-        width: 3em;
-        margin-bottom: 0.4ex;
-        padding: 0;
-        height: 1.4pt;
-        border-top-style: solid;
-        border-bottom-style: solid;
-        border-width: 0.7pt;
     }
     .desc {
         font-size: 0.8rem;
@@ -298,25 +291,33 @@
                 <td class="desc">scheduled passenger service</td>
             </tr>
             <tr>
-                <td colspan="2" class="symbol">
-                    <span class="emptytrack"
-                          style="border-color: #191919; width: 0.25em"
-                    ></span><span class="track"
-                          style="border-color: #191919; width: 1em"
-                    ></span><span class="emptytrack"
-                          style="border-color: #191919; width: 0.5em"
-                    ></span><span class="track"
-                          style="border-color: #191919; width: 1em"
-                    ></span><span class="emptytrack"
-                          style="border-color: #191919; width: 0.25em"
+                <td colspan="2" class="symbol" style="border-color: #191919">
+                    <span class="track" style="width: 0.4em"
+                    ></span><span class="empty" style="width: 0.2em"
+                    ></span><span class="track" style="width: 0.8em"
+                    ></span><span class="empty" style="width: 0.2em"
+                    ></span><span class="track" style="width: 0.8em"
+                    ></span><span class="empty" style="width: 0.2em"
+                    ></span><span class="track" style="width: 0.4em"
                     ></span>
                 </td>
                 <td class="desc">heritage or tourist service</td>
             </tr>
             <tr>
-                <td colspan="2" class="symbol">
-                    <span class="emptytrack"
-                          style="border-color: #191919"
+                <td colspan="2" class="symbol" style="border-color: #191919">
+                    <span class="track" style="width: 0.175em"
+                    ></span><span class="empty" style="width: 0.15em"
+                    ></span><span class="track" style="width: 0.35em"
+                    ></span><span class="empty" style="width: 0.15em"
+                    ></span><span class="track" style="width: 0.35em"
+                    ></span><span class="empty" style="width: 0.15em"
+                    ></span><span class="track" style="width: 0.35em"
+                    ></span><span class="empty" style="width: 0.15em"
+                    ></span><span class="track" style="width: 0.35em"
+                    ></span><span class="empty" style="width: 0.15em"
+                    ></span><span class="track" style="width: 0.35em"
+                    ></span><span class="empty" style="width: 0.15em"
+                    ></span><span class="track" style="width: 0.175em"
                     ></span>
                 </td>
                 <td class="desc">no passenger service</td>
