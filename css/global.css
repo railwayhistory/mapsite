@@ -1,3 +1,23 @@
+:root {
+    --el-none:    #452d20;
+    --el-ac-high: #7700d2;
+    --el-ac-low:  #ba048f;
+    --el-dc-high: #d30000;
+    --el-dc-low:  #e56a00;
+    --el-rail:    #029b3e;
+    --el-four:    #697d4c;
+    --el-tram:    #005f9a;
+    --el-open     #191919;
+    --el-closed:  #8c8c8c;
+    --el-removed: #a6a6a6;
+    --el-gone:    #e6e6e6;
+
+    --pax-full:    #191919;
+    --pax-limited: #4c4c4c;
+    --pax-none:    #b2b2b2;
+    --pax-closed:  #e5e5e5
+}
+
 body {
     margin: 0;
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
